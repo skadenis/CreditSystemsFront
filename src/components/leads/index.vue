@@ -46,7 +46,7 @@
       v-for="(lead, index) in filteredLeads"
       :index="index"
       :key="index"
-      :data="lead"
+      :lead="lead"
     />
   </div>
 </template>

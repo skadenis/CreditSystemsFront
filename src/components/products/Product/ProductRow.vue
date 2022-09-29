@@ -1,30 +1,30 @@
 <template>
-  <div class="product-row" @click="open_product(data.id)">
+  <div class="product-row" @click="open_product(product.id)">
     <div>
-      <p>{{ data.product_name }}</p>
+      <p>{{ product.product_name }}</p>
     </div>
     <div>
-      <p>{{ data.type | productTypeName }}</p>
+      <p>{{ product.type | productTypeName }}</p>
     </div>
     <div>
       <p>
         <span
-          >От {{ data.min_amount }} до {{ data.max_amount }}
-          {{ data.currency | currensyName }}</span
+          >От {{ product.min_amount }} до {{ product.max_amount }}
+          {{ product.currency | currensyName }}</span
         >
       </p>
     </div>
     <div>
       <p>
-        <span>От {{ data.min_term }} до {{ data.max_term }} мес.</span>
+        <span>От {{ product.min_term }} до {{ product.max_term }} мес.</span>
       </p>
     </div>
     <div>
-      <p v-if="data.max_percent === null">
-        <span>От {{ data.min_percent }} %</span>
+      <p v-if="product.max_percent === null">
+        <span>От {{ product.min_percent }} %</span>
       </p>
-      <p v-if="data.max_percent !== null">
-        <span>От {{ data.min_percent }} до {{ data.max_percent }} %</span>
+      <p v-if="product.max_percent !== null">
+        <span>От {{ product.min_percent }} до {{ product.max_percent }} %</span>
       </p>
     </div>
   </div>
@@ -32,13 +32,17 @@
 
 <script>
 export default {
-  name: "product",
+  props: ["product"],
 
-  props: ["data"],
+  data() {
+    return {
+      bank: {},
+    };
+  },
 
   methods: {
     open_product(id) {
-      this.goTo("/banks/" + this.data.bank_id + "/product/" + id);
+      this.goTo("/banks/" + this.product.bank_id + "/product/" + id);
     },
   },
 };

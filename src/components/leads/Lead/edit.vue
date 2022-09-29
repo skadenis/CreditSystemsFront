@@ -109,7 +109,7 @@
       </div>
       <ProductRow
         v-for="(product, index) in products"
-        :data="product"
+        :product="product"
         :key="index"
       ></ProductRow>
     </a-form-model-item>

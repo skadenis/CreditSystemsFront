@@ -138,7 +138,7 @@
       <LeadRow
         v-for="(lead, index) in leads"
         :index="index"
-        :data="lead"
+        :lead="lead"
         :key="index"
       ></LeadRow>
     </a-form-model-item>

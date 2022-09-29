@@ -1,26 +1,26 @@
 <template>
-  <div class="lead-row" @click="open_lead(data.id)">
+  <div class="lead-row" @click="open_lead(lead.id)">
     <div>
       <p>{{ index + 1 }}</p>
     </div>
     <div>
-      <p>{{ data.status | leadStatusName }}</p>
+      <p>{{ lead.status | leadStatusName }}</p>
     </div>
     <div>
-      <p>{{ data.phone }}</p>
+      <p>{{ lead.phone }}</p>
     </div>
     <div>
-      <p>{{ data.lastname }}</p>
+      <p>{{ lead.lastname }}</p>
     </div>
     <div>
-      <p>{{ data.name }}</p>
+      <p>{{ lead.name }}</p>
     </div>
     <div>
       <p>
-        <span v-if="data.payment_level !== 0">{{ data.payment_level }}</span>
+        <span v-if="lead.payment_level !== 0">{{ lead.payment_level }}</span>
         <span
-          v-if="!data.payment_level"
-          @click="open_calculator(data.id)"
+          v-if="!lead.payment_level"
+          @click="open_calculator(lead.id)"
           class="calculator-link"
           >Рассчитать</span
         >
@@ -33,18 +33,17 @@
 import LeadsAPI from "../../../../api/LeadsAPI";
 
 export default {
-  name: "lead",
-  props: ["data", "index"],
+  props: ["lead", "index"],
   methods: {
     open_lead(id) {
-      if (this.data.status === 1) {
-        this.data.status = 2;
+      if (this.lead.status === 1) {
+        this.lead.status = 2;
         this.edit_lead();
       }
       this.goTo("/leads/" + id);
     },
     async edit_lead() {
-      LeadsAPI.edit(this.data)
+      LeadsAPI.edit(this.lead)
         .then((response) => {})
         .catch((e) => {
           console.log(e);

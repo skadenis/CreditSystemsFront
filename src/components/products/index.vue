@@ -74,7 +74,7 @@
     <ProductRow
       v-for="(product, index) in filteredProducts"
       :key="index"
-      :data="product"
+      :product="product"
     ></ProductRow>
   </div>
 </template>
