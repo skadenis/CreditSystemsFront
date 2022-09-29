@@ -81,7 +81,13 @@
         </a-form-model-item></a-col
       >
     </a-row>
-    <button class="add-btn" @click="save">Сохранить</button>
+    <a-row type="flex" :gutter="24" class="buttons__block">
+      <a-col :span="24" :lg="24" :md="24">
+        <a-button class="add-btn" type="primary" @click="save"
+          >Сохранить</a-button
+        >
+      </a-col>
+    </a-row>
   </div>
 </template>
 

@@ -40,6 +40,10 @@ export default {
   .button {
     width: 100%;
     color: #fff;
+
+    &:last-child {
+      margin-top: 10px;
+    }
   }
 }
 </style>
