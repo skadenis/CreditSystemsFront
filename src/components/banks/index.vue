@@ -35,7 +35,6 @@ export default {
       BanksAPI.get_all()
         .then((response) => {
           this.banks = response.data;
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);

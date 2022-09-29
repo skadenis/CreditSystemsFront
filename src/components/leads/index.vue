@@ -110,7 +110,6 @@ export default {
         .then((response) => {
           this.leads = response.data;
           this.filterData();
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);

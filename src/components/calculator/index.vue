@@ -156,7 +156,6 @@ export default {
       LeadsAPI.get(this.LeadId)
         .then((response) => {
           this.lead = response.data.data;
-          console.log(response);
         })
         .catch((e) => {
           console.log(e);

@@ -14,14 +14,8 @@ class ProductsAPI extends BaseAPI {
   }
 
   get_filtered(data) {
-    console.log(data);
     return this.axios.post("banks/product/filtered", data);
   }
-
-  // get_bank_name(id) {
-  //   console.log(id);
-  //   return this.axios.get("/banks/product/name/" + id);
-  // }
 
   add(data) {
     return this.axios.post("banks/product/add", data);

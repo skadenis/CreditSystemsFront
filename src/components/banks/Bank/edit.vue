@@ -68,7 +68,6 @@ export default {
       BanksAPI.get(this.BankId)
         .then((response) => {
           this.bank = response.data.data;
-          console.log(response);
         })
         .catch((e) => {
           console.log(e);

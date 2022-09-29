@@ -18,7 +18,6 @@ class LeadsAPI extends BaseAPI {
   }
 
   edit(data) {
-    console.log(data);
     return this.axios.put("/leads/edit", data);
   }
 

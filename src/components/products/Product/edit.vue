@@ -176,7 +176,6 @@ export default {
         .then((response) => {
           this.product = response.data.data;
           this.get_filtered();
-          console.log(response);
         })
         .catch((e) => {
           console.log(e);
@@ -188,7 +187,6 @@ export default {
         LeadsAPI.get_filtered(this.product)
           .then((response) => {
             this.leads = response.data;
-            console.log(response);
           })
           .catch((e) => {
             console.log(e);
@@ -200,7 +198,6 @@ export default {
       LeadsAPI.get_all()
         .then((response) => {
           this.leads = response.data;
-          console.log(response);
         })
         .catch((e) => {
           console.log(e);
