@@ -10,6 +10,9 @@ export default function (id) {
     case 3:
       textStatus = "Обработан";
       break;
+    case 4:
+      textStatus = "Удален";
+      break;
   }
   return textStatus;
 }

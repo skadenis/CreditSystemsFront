@@ -9,6 +9,10 @@ class LeadsAPI extends BaseAPI {
     return this.axios.get("/leads");
   }
 
+  get_deleted() {
+    return this.axios.get("/leads/deleted");
+  }
+
   get_filtered(data) {
     return this.axios.post("/leads/filtered", data);
   }
@@ -23,6 +27,10 @@ class LeadsAPI extends BaseAPI {
 
   delete(data) {
     return this.axios.put("/leads/delete", data);
+  }
+
+  restore(data) {
+    return this.axios.put("/leads/restore", data);
   }
 }
 

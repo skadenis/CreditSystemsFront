@@ -2,10 +2,13 @@
   <div>
     <a-row type="flex" :gutter="24">
       <a-col :span="24" :lg="8" :md="24">
-        <a-form-model-item label="Статус" v-if="lead.status === 1">
+        <a-form-model-item
+          label="Статус"
+          v-if="lead.status === 1 || lead.status === 4"
+        >
           {{ lead.status | leadStatusName }}
         </a-form-model-item>
-        <a-form-model-item label="Статус" v-if="lead.status !== 1">
+        <a-form-model-item label="Статус" v-else>
           <a-select style="width: 100%" v-model="lead.status">
             <a-select-option :value="2"> Просмотрен </a-select-option>
             <a-select-option :value="3"> Обработан </a-select-option>
@@ -25,7 +28,11 @@
       <a-col :span="24" :lg="8" :md="24">
         <a-form-model-item label="Номер телефона">
           <a-input
-            :style="'border-color:' + color"
+            :style="
+              lead.phone.length !== 17
+                ? 'border-color: red'
+                : 'border-color: #D9D9D9'
+            "
             v-model="lead.phone"
             v-maska="'+375(##)###-##-##'"
             placeholder="+375(__)___-__-__"
@@ -44,13 +51,26 @@
       <a-col :span="24" :lg="8" :md="24">
         <a-form-model-item label="Желаемая сумма">
           <a-input
+            :style="
+              !lead.desired_amount
+                ? 'border-color: red'
+                : 'border-color: #D9D9D9'
+            "
             type="number"
+            step="1000"
+            min="1000"
             v-model="lead.desired_amount"
           /> </a-form-model-item
       ></a-col>
       <a-col :span="24" :lg="8" :md="24">
         <a-form-model-item label="Срок">
-          <a-input type="number" v-model="lead.term" /> </a-form-model-item
+          <a-input
+            :style="!lead.term ? 'border-color: red' : 'border-color: #D9D9D9'"
+            type="number"
+            step="1"
+            min="1"
+            v-model="lead.term"
+          /> </a-form-model-item
       ></a-col>
       <a-col :span="24" :lg="8" :md="24">
         <a-form-model-item label="Цель кредита">
@@ -76,13 +96,26 @@
       >
     </a-row>
 
-    <a-row type="flex" :gutter="24" class="buttons__block">
+    <a-row
+      v-if="lead.status === 4"
+      type="flex"
+      :gutter="24"
+      class="buttons__block"
+    >
+      <a-col :span="24" :lg="24" :md="24">
+        <a-button class="button" type="primary" @click="restore_lead"
+          >Восстановить</a-button
+        >
+      </a-col>
+    </a-row>
+
+    <a-row v-else type="flex" :gutter="24" class="buttons__block">
       <a-col :span="24" :lg="12" :md="24">
         <a-button
           class="button"
           type="primary"
           @click="
-            lead.phone.length === 17 && lead.desired_amount
+            lead.phone.length === 17 && lead.desired_amount && lead.term
               ? edit_lead()
               : make_error()
           "
@@ -135,7 +168,6 @@ export default {
       },
       products: [],
       visible: false,
-      color: "",
     };
   },
 
@@ -196,8 +228,19 @@ export default {
           console.log(e);
         });
     },
+
+    async restore_lead() {
+      LeadsAPI.restore(this.lead)
+        .then((response) => {
+          this.$root.$emit("createAlertGood");
+          this.goTo("/leads/");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
     make_error() {
-      this.color = "red";
       this.$root.$emit("createAlertError");
     },
     showModalDelete() {

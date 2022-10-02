@@ -8,7 +8,11 @@
         <a-col :span="24" :lg="8" :md="24">
           <a-form-model-item label="Номер телефона">
             <a-input
-              :style="'border-color:' + color"
+              :style="
+                lead.phone.length !== 17
+                  ? 'border-color: red'
+                  : 'border-color: #D9D9D9'
+              "
               v-model="lead.phone"
               v-maska="'+375(##)###-##-##'"
               placeholder="+375(__)___-__-__"
@@ -26,13 +30,28 @@
         <a-col :span="24" :lg="8" :md="24">
           <a-form-model-item label="Желаемая сумма">
             <a-input
+              :style="
+                !lead.desired_amount
+                  ? 'border-color: red'
+                  : 'border-color: #D9D9D9'
+              "
               type="number"
+              step="1000"
+              min="1000"
               v-model="lead.desired_amount"
             /> </a-form-model-item
         ></a-col>
         <a-col :span="24" :lg="8" :md="24">
           <a-form-model-item label="Срок">
-            <a-input type="number" v-model="lead.term" /> </a-form-model-item
+            <a-input
+              :style="
+                !lead.term ? 'border-color: red' : 'border-color: #D9D9D9'
+              "
+              type="number"
+              step="1"
+              min="1"
+              v-model="lead.term"
+            /> </a-form-model-item
         ></a-col>
         <a-col :span="24" :lg="8" :md="24">
           <a-form-model-item label="Цель кредита">
@@ -60,10 +79,10 @@
       <a-row type="flex" :gutter="24" class="buttons__block">
         <a-col :span="24" :lg="24" :md="24">
           <a-button
-            class="add-btn"
+            class="button"
             type="primary"
             @click="
-              lead.phone.length === 17 && lead.desired_amount
+              lead.phone.length === 17 && lead.desired_amount && lead.term
                 ? add_lead()
                 : make_error()
             "
@@ -86,7 +105,6 @@ export default {
       lead: {
         phone: "",
       },
-      color: "",
     };
   },
   methods: {
@@ -101,15 +119,10 @@ export default {
         });
     },
     make_error() {
-      this.color = "red";
       this.$root.$emit("createAlertError");
     },
   },
 };
 </script>
 
-<style scoped lang="scss">
-.error {
-  border: 1px solid red;
-}
-</style>
+<style scoped lang="scss"></style>

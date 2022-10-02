@@ -1,7 +1,10 @@
 <template>
   <div>
     <a-form-model-item label="Название">
-      <a-input v-model="bank.bank_name" />
+      <a-input
+        v-model="bank.bank_name"
+        :style="!bank.bank_name ? 'border-color: red' : 'border-color: #D9D9D9'"
+      />
     </a-form-model-item>
     <a-form-model-item label="Комментарий">
       <a-textarea rows="4" v-model="bank.description" />
@@ -32,7 +35,10 @@
 
     <a-row type="flex" :gutter="24" class="buttons__block">
       <a-col :span="24" :lg="12" :md="24">
-        <a-button class="button" type="primary" @click="edit_bank"
+        <a-button
+          class="button"
+          type="primary"
+          @click="bank.bank_name ? edit_bank() : make_error()"
           >Сохранить</a-button
         >
       </a-col>
@@ -99,6 +105,9 @@ export default {
     },
     hideModalDelete() {
       this.visible = false;
+    },
+    make_error() {
+      this.$root.$emit("createAlertError");
     },
   },
 };

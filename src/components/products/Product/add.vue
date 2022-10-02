@@ -1,8 +1,17 @@
 <template>
   <div>
-    <a-form-model-item label="Продукт">
-      <a-input v-model="product.product_name" />
-    </a-form-model-item>
+    <a-row type="flex" :gutter="24">
+      <a-col :span="24" :lg="6" :md="24">
+        <a-form-model-item label="Банк">
+          <span>{{ bank.bank_name }}</span>
+        </a-form-model-item>
+      </a-col>
+      <a-col :span="24" :lg="18" :md="24">
+        <a-form-model-item label="Продукт">
+          <a-input v-model="product.product_name" />
+        </a-form-model-item>
+      </a-col>
+    </a-row>
 
     <a-form-model-item label="Комментарий">
       <a-textarea rows="4" v-model="product.description" />
@@ -106,7 +115,7 @@
 
     <a-row type="flex" :gutter="24" class="buttons__block">
       <a-col :span="24" :lg="24" :md="24">
-        <a-button class="add-btn" type="primary" @click="add_product"
+        <a-button class="button" type="primary" @click="add_product"
           >Добавить</a-button
         >
       </a-col>
@@ -116,6 +125,7 @@
 
 <script>
 import ProductsAPI from "../../../../api/ProductsAPI";
+import BanksAPI from "../../../../api/BanksAPI";
 
 export default {
   props: ["BankId"],
@@ -124,17 +134,34 @@ export default {
       product: {
         bank_id: this.BankId,
       },
+      bank: {},
     };
+  },
+
+  mounted() {
+    this.get_bank();
   },
 
   methods: {
     async add_product() {
+      this.product.product_name =
+        this.bank.bank_name + " - " + this.product.product_name;
       ProductsAPI.add(this.product)
         .then((response) => {
           this.$root.$emit("createAlertGood");
           this.goTo(
             "/banks/" + this.BankId + "/product/" + response.data.data.id
           );
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    get_bank() {
+      BanksAPI.get(this.BankId)
+        .then((response) => {
+          this.bank = response.data.data;
         })
         .catch((e) => {
           console.log(e);

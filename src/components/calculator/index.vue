@@ -83,7 +83,7 @@
     </a-row>
     <a-row type="flex" :gutter="24" class="buttons__block">
       <a-col :span="24" :lg="24" :md="24">
-        <a-button class="add-btn" type="primary" @click="save"
+        <a-button class="button" type="primary" @click="save"
           >Сохранить</a-button
         >
       </a-col>

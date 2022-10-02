@@ -9,6 +9,9 @@
             <a-select-option :value="1"> Новые </a-select-option>
             <a-select-option :value="2"> Просмотренные </a-select-option>
             <a-select-option :value="3"> Обработанные </a-select-option>
+            <a-select-option v-if="show_deleted" :value="4">
+              Удаленные
+            </a-select-option>
           </a-select>
         </a-form-model-item>
       </a-col>
@@ -31,6 +34,14 @@
               На строительство жилья
             </a-select-option>
           </a-select>
+        </a-form-model-item>
+      </a-col>
+      <a-col :span="24" :lg="5" :md="5">
+        <a-form-model-item label="Отображать удаленные">
+          <a-switch
+            v-model="show_deleted"
+            @change="show_deleted ? get_deleted() : get_leads()"
+          />
         </a-form-model-item>
       </a-col>
     </a-row>
@@ -68,6 +79,7 @@ export default {
         status: 0,
         credit_target: 0,
       },
+      show_deleted: false,
     };
   },
 
@@ -105,7 +117,7 @@ export default {
       this.filteredLeads = leads;
     },
 
-    get_leads() {
+    async get_leads() {
       LeadsAPI.get_all()
         .then((response) => {
           this.leads = response.data;
@@ -115,6 +127,18 @@ export default {
           console.log(e);
         });
     },
+
+    async get_deleted() {
+      LeadsAPI.get_deleted()
+        .then((response) => {
+          this.leads = response.data;
+          this.filterData();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
     add_lead() {
       this.goTo("/leads/add");
     },

@@ -1,7 +1,9 @@
 <template>
   <div class="lead-row" @click="open_lead(lead.id)">
     <div>
-      <p>{{ index + 1 }}</p>
+      <p>
+        {{ index + 1 }}
+      </p>
     </div>
     <div>
       <p>{{ lead.status | leadStatusName }}</p>
