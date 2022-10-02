@@ -158,7 +158,7 @@ export default {
   },
 
   methods: {
-    async get_lead() {
+    get_lead() {
       LeadsAPI.get(this.LeadId)
         .then((response) => {
           this.lead = response.data.data;

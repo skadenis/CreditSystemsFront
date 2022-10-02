@@ -64,7 +64,7 @@ export default {
     this.get_bank();
   },
   methods: {
-    async get_bank() {
+    get_bank() {
       BanksAPI.get(this.BankId)
         .then((response) => {
           this.bank = response.data.data;

@@ -144,7 +144,7 @@ export default {
   },
 
   methods: {
-    async get_lead() {
+    get_lead() {
       LeadsAPI.get(this.LeadId)
         .then((response) => {
           this.lead = response.data.data;
@@ -167,7 +167,7 @@ export default {
       } else this.get_products();
     },
 
-    async get_products() {
+    get_products() {
       ProductsAPI.get_all()
         .then((response) => {
           this.products = response.data;

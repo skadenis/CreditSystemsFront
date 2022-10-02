@@ -171,7 +171,7 @@ export default {
   },
 
   methods: {
-    async get_product() {
+    get_product() {
       ProductsAPI.get(this.ProductId)
         .then((response) => {
           this.product = response.data.data;
